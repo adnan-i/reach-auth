@@ -1,27 +1,25 @@
 'use strict';
 
-var router = Reach.Router;
-
-router.post('/auth/login', {
+Route.post('/auth/login', {
   uses   : 'AuthController@login',
   params : ['email', 'password']
 });
 
-router.post('/auth/facebook', {
+Route.post('/auth/facebook', {
   uses   : 'AuthController@facebook',
   params : ['code', 'redirectUri']
 });
 
-router.get('/auth/remember', {
+Route.get('/auth/remember', {
   policy : 'authenticate',
   uses   : 'AuthController@remember'
 });
 
-router.get('/auth/validate', {
+Route.get('/auth/validate', {
   policy : 'authenticate',
   uses   : 'AuthController@validate'
 });
 
-router.get('/auth/logout', {
+Route.get('/auth/logout', {
   uses : 'AuthController@logout'
 });
