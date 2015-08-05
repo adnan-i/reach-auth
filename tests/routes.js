@@ -38,7 +38,7 @@ describe('GET /auth/remember', function () {
         Authorization : _user.token
       }
     });
-    assert.equal(res.statusCode, 204);
+    assert.equal(res.statusCode, 200);
   });
 });
 
@@ -49,7 +49,7 @@ describe('GET /auth/validate', function () {
         Authorization : _user.token
       }
     });
-    assert.equal(res.statusCode, 204);
+    assert.equal(res.statusCode, 200);
   });
 });
 
@@ -60,7 +60,7 @@ describe('GET /auth/logout', function () {
         Authorization : _user.token
       }
     });
-    assert.equal(res.statusCode, 204);
+    assert.equal(res.statusCode, 200);
   });
 
   it('should fail on remember', function *() {
