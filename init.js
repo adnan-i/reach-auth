@@ -1,13 +1,13 @@
 'use strict';
 
 let bcrypt = require('co-bcrypt');
-let auth   = Reach.Auth;
 let User   = Reach.model('User');
+let auth   = Reach.Auth;
 
 // ### User
 
 auth.user = function *(userId, groupId) {
-  let user = yield User.find({ where: { id : userId }, limit: 1 });
+  let user = yield User.findById(userId);
   if (!user) {
     this.throw({
       type    : 'AUTH_INVALID_USER',
@@ -26,7 +26,7 @@ auth.user = function *(userId, groupId) {
 // ### Login
 
 auth.login = function *(email, password, group) {
-  let user = yield User.find({ where: { email: email }, limit: 1 });
+  let user = yield User.findOne({ where: { email: email }});
   if (!user) {
     this.throw({
       type    : 'AUTH_INVALID_CREDENTIALS',

@@ -3,30 +3,23 @@
 let Facebook = Reach.Auth.Facebook;
 let User     = Reach.model('User');
 
-module.exports = (function () {
-
-  /**
-   * @class UserController
-   */
-  function AuthController() {}
+Reach.Register.Controller('AuthController', function (controller) {
 
   /**
    * @method login
-   * @param  {object} post
-   * @return {object}
+   * @return {User}
    */
-  AuthController.prototype.login = function *(post) {
+  controller.login = function *(post) {
     yield this.auth.login(post.email, post.password);
 
     return this.auth.user;
   };
 
-  /* istanbul ignore next: domain restrictions makes it hard to test across multiple environments */
-
   /**
    * @method facebook
+   * @return {Object}
    */
-  AuthController.prototype.facebook = function *(post) {
+  controller.facebook = function *(post) {
     let facebook    = new Facebook(Reach.config.facebook);
     let accessToken = yield facebook.accessToken(post.code, post.redirectUri);
     let profile     = yield facebook.profile(accessToken);
@@ -65,28 +58,28 @@ module.exports = (function () {
 
   /**
    * @method remember
-   * @return {void}
+   * @return {Void}
    */
-  AuthController.prototype.remember = function *() {
+  controller.remember = function *() {
     yield this.auth.remember();
   };
 
   /**
    * @method validate
-   * @return {void}
+   * @return {Void}
    */
-  AuthController.prototype.validate = function *() {
+  controller.validate = function *() {
     // If we hit this method we are validated
   };
 
   /**
    * @method logout
-   * @return {Object}
+   * @return {Void}
    */
-  AuthController.prototype.logout = function *() {
+  controller.logout = function *() {
     return yield this.auth.logout();
   };
 
-  return AuthController;
+  return controller;
 
-})();
+});

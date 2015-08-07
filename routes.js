@@ -10,16 +10,6 @@ Route.post('/auth/facebook', {
   params : ['code', 'redirectUri']
 });
 
-Route.get('/auth/remember', {
-  policy : 'authenticate',
-  uses   : 'AuthController@remember'
-});
-
-Route.get('/auth/validate', {
-  policy : 'authenticate',
-  uses   : 'AuthController@validate'
-});
-
-Route.get('/auth/logout', {
-  uses : 'AuthController@logout'
-});
+Route.get('/auth/remember', ['authenticate', 'AuthController@remember']);
+Route.get('/auth/validate', ['authenticate', 'AuthController@validate']);
+Route.get('/auth/logout',                    'AuthController@logout');
