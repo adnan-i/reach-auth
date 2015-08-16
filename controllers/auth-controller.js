@@ -16,10 +16,11 @@ Reach.Register.Controller('AuthController', function (controller) {
 
   /**
    * @method facebook
-   * @return {Object}
+   * @param  {Object} data
+   * @return {User}
    */
-  controller.facebook = function *(post) {
-    return yield auth.social('facebook', post.code);
+  controller.facebook = function *(data) {
+    return yield auth.social('facebook', data);
   };
 
   /**
