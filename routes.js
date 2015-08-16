@@ -1,13 +1,12 @@
 'use strict';
 
-Route.post('/auth/login', {
+Route.pst('/auth/login', {
   uses   : 'AuthController@login',
   params : ['email', 'password']
 });
 
-Route.post('/auth/facebook', {
-  uses   : 'AuthController@facebook',
-  params : ['code', 'redirectUri']
+Route.get('/auth/facebook', {
+  uses : 'AuthController@facebook'
 });
 
 Route.get('/auth/remember', ['authenticate', 'AuthController@remember']);
