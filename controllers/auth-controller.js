@@ -10,7 +10,6 @@ Reach.Register.Controller('AuthController', function (controller) {
    */
   controller.login = function *(post) {
     yield this.auth.login(post.email, post.password);
-
     return this.auth.user;
   };
 
@@ -20,7 +19,7 @@ Reach.Register.Controller('AuthController', function (controller) {
    * @return {User}
    */
   controller.facebook = function *(data) {
-    return yield auth.social('facebook', data);
+    return yield auth.social('facebook', data, this.auth.user);
   };
 
   /**
