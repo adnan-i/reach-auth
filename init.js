@@ -17,8 +17,8 @@ auth.user = function *(id, group) {
   if (!user) {
     this.throw({
       type    : 'AUTH_INVALID_USER',
-      message : 'The user requested with the token does not exist'
-    }, 401);
+      message : 'No user with the id provided by the authentication store.'
+    }, 400);
   }
 
   if (group) {
@@ -48,16 +48,16 @@ auth.login = function *(email, password, options) {
   if (!user) {
     this.throw({
       type    : 'AUTH_INVALID_CREDENTIALS',
-      message : 'The email and/or password provided did not match any record in our database'
-    }, 401);
+      message : 'The email and/or password provided is invalid.'
+    }, 400);
   }
 
   let validPassword = yield bcrypt.compare(password, user.password);
   if (!validPassword) {
     this.throw({
       type    : 'AUTH_INVALID_CREDENTIALS',
-      message : 'The email and/or password provided did not match any record in our database'
-    }, 401);
+      message : 'The email and/or password provided is invalid.'
+    }, 400);
   }
 
   if (options.group) {
