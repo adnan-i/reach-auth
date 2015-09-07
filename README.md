@@ -14,5 +14,5 @@ A module that provides authentication endpoints interacting with the reach-api c
 POST /auth/login
 GET  /auth/remember
 GET  /auth/validate
-GET  /auth/logout
+GET  /auth/logout?from=device
 ```

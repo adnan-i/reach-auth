@@ -4,10 +4,16 @@ let bcrypt = require('co-bcrypt');
 let User   = Reach.model('User');
 let auth   = Reach.Auth;
 
-// ### User
-
-auth.user = function *(userId, groupId) {
-  let user = yield User.findById(userId);
+/**
+ * Method used by the core authentication in reach to assign a user to
+ * the incoming requests that contains an auth token.
+ * @method user
+ * @param  {Int} id
+ * @param  {Int} group
+ * @return {User}
+ */
+auth.user = function *(id, group) {
+  let user = yield User.findById(id);
   if (!user) {
     this.throw({
       type    : 'AUTH_INVALID_USER',
@@ -15,17 +21,29 @@ auth.user = function *(userId, groupId) {
     }, 401);
   }
 
-  if (groupId) {
+  if (group) {
     // Fetch group...
-    // user._group = group;
+    // user.group = group;
   }
 
   return user;
 };
 
-// ### Login
-
-auth.login = function *(email, password, group) {
+/**
+ * @method login
+ * @param  {String} email
+ * @param  {String} password
+ * @param  {Object} [options]
+ * @return {User}
+ * @example
+    this.auth.login('john@doe.com', 'secret', {
+      from  : '8sUwaQ1k', // Allows for a client to sign in from multiple devices
+      group : 1           // If the user is signing in to a certain group
+    })
+ */
+auth.login = function *(email, password, options) {
+  options = options || {};
+  
   let user = yield User.findOne({ where: { email: email }});
   if (!user) {
     this.throw({
@@ -42,12 +60,12 @@ auth.login = function *(email, password, group) {
     }, 401);
   }
 
-  if (group) {
+  if (options.group) {
     // Validate Group
   }
 
   user       = user.toJSON();
-  user.token = yield auth.token(user.id, group);
+  user.token = yield auth.token(user.id, options);
 
   return user;
 };

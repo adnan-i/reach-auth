@@ -9,7 +9,10 @@ Reach.Register.Controller('AuthController', function (controller) {
    * @return {User}
    */
   controller.login = function *(post) {
-    yield this.auth.login(post.email, post.password);
+    yield this.auth.login(post.email, post.password, {
+      from  : post.from,
+      group : post.group
+    });
     return this.auth.user;
   };
 
@@ -42,8 +45,8 @@ Reach.Register.Controller('AuthController', function (controller) {
    * @method logout
    * @return {Void}
    */
-  controller.logout = function *() {
-    return yield this.auth.logout();
+  controller.logout = function *(query) {
+    return yield this.auth.logout(query.from);
   };
 
   return controller;
