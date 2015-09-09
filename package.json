@@ -1,6 +1,6 @@
 {
   "name": "reach-auth",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "An authentication module written for the reach-api core authentication protocols",
   "author": "Christoffer Rødvik",
   "license": "MIT",
@@ -10,6 +10,6 @@
   "reach": {
     "name": "auth",
     "type": "module",
-    "main": "init.js"
+    "main": "bootstrap.js"
   }
 }

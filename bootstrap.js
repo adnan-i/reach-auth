@@ -2,6 +2,7 @@
 
 let bcrypt = require('co-bcrypt');
 let User   = Reach.model('User');
+let error  = Reach.ErrorHandler;
 let auth   = Reach.Auth;
 
 /**
@@ -15,17 +16,10 @@ let auth   = Reach.Auth;
 auth.user = function *(id, group) {
   let user = yield User.findById(id);
   if (!user) {
-    this.throw({
+    throw error.parse({
       type    : 'AUTH_INVALID_USER',
       message : 'No user with the id provided by the authentication store.'
     }, 400);
-  }
-
-  if (user.status === 'suspended') {
-    this.throw({
-      type    : 'AUTH_SUSPENDED_USER',
-      message : 'Access has been suspended. Please contact us for information regarding this account.'
-    }, 401);
   }
 
   if (group) {
@@ -50,25 +44,18 @@ auth.user = function *(id, group) {
  */
 auth.login = function *(email, password, options) {
   options = options || {};
-
+  
   let user = yield User.findOne({ where: { email: email }});
   if (!user) {
-    this.throw({
+    throw error.parse({
       type    : 'AUTH_INVALID_CREDENTIALS',
       message : 'The email and/or password provided is invalid.'
     }, 400);
   }
 
-  if (user.status === 'suspended') {
-    this.throw({
-      type    : 'AUTH_SUSPENDED_USER',
-      message : 'Access has been suspended. Please contact us for information regarding this account.'
-    }, 401);
-  }
-
   let validPassword = yield bcrypt.compare(password, user.password);
   if (!validPassword) {
-    this.throw({
+    throw error.parse({
       type    : 'AUTH_INVALID_CREDENTIALS',
       message : 'The email and/or password provided is invalid.'
     }, 400);
