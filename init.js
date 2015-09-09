@@ -21,6 +21,13 @@ auth.user = function *(id, group) {
     }, 400);
   }
 
+  if (user.status === 'suspended') {
+    this.throw({
+      type    : 'AUTH_SUSPENDED_USER',
+      message : 'Access has been suspended. Please contact us for information regarding this account.'
+    }, 401);
+  }
+
   if (group) {
     // Fetch group...
     // user.group = group;
@@ -43,13 +50,20 @@ auth.user = function *(id, group) {
  */
 auth.login = function *(email, password, options) {
   options = options || {};
-  
+
   let user = yield User.findOne({ where: { email: email }});
   if (!user) {
     this.throw({
       type    : 'AUTH_INVALID_CREDENTIALS',
       message : 'The email and/or password provided is invalid.'
     }, 400);
+  }
+
+  if (user.status === 'suspended') {
+    this.throw({
+      type    : 'AUTH_SUSPENDED_USER',
+      message : 'Access has been suspended. Please contact us for information regarding this account.'
+    }, 401);
   }
 
   let validPassword = yield bcrypt.compare(password, user.password);

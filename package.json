@@ -1,6 +1,6 @@
 {
   "name": "reach-auth",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "An authentication module written for the reach-api core authentication protocols",
   "author": "Christoffer Rødvik",
   "license": "MIT",
