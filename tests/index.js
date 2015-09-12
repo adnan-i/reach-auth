@@ -1,6 +1,6 @@
 'use strict';
 
-let bcrypt = require('co-bcrypt');
+let bcrypt = require('../lib/bcrypt-service');
 let User   = Reach.model('User');
 
 describe('Auth Module', function () {
