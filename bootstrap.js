@@ -2,7 +2,7 @@
 
 let bcrypt = require('./lib/bcrypt-service');
 let User   = Reach.model('User');
-let error  = Reach.ErrorHandler;
+let error  = Reach.Error;
 let auth   = Reach.Auth;
 
 /**
