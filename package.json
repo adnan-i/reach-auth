@@ -1,12 +1,9 @@
 {
   "name": "reach-auth",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Authentication module written for reach-api.",
   "author": "Christoffer Rødvik",
   "license": "MIT",
-  "dependencies": {
-    "bcryptjs": "2.2.1"
-  },
   "reach": {
     "name": "auth",
     "type": "module"

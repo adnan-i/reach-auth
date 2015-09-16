@@ -9,7 +9,7 @@ Reach.Register.Controller('AuthController', function (controller) {
    * @return {User}
    */
   controller.login = function *(post) {
-    return yield auth.email(post.email, post.password, {
+    return yield auth.login(post.identifier, post.password, {
       from  : post.from,
       group : post.group
     });

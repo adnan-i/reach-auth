@@ -2,7 +2,7 @@
 
 Route.pst('/auth/login', {
   uses   : 'AuthController@login',
-  params : ['email', 'password']
+  params : [ 'identifier', 'password' ]
 });
 
 Route.pst('/auth/facebook',                  'AuthController@facebook');

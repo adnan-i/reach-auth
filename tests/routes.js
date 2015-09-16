@@ -9,8 +9,8 @@ describe('POST /auth/login', function () {
   it('should successfully login', function *() {
     let res = yield request.post(config.api.uri + '/auth/login', {
       body : {
-        email    : 'john.doe@test.none',
-        password : 'password'
+        identifier : 'john.doe@test.none',
+        password   : 'password'
       }
     });
     let body = res.body;
@@ -23,8 +23,8 @@ describe('POST /auth/login', function () {
   it('should fail with wrong credentials', function *() {
     let res = yield request.post(config.api.uri + '/auth/login' ,{
       body : {
-        email    : 'john.doe@test.none',
-        password : 'invalid.password'
+        identifier : 'john.doe@test.none',
+        password   : 'invalid.password'
       }
     });
     assert.equal(res.statusCode, 400);
